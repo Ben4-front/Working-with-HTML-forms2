@@ -1,27 +1,39 @@
-name: Build and Deploy
-on:
-  push:
-    branches:
-      - main 
+name: Deploy static content to Pages
 
+on:
+  # Запуск при пуше в ветку main
+  push:
+    branches: ["main"]
+
+  # Позволяет запускать вручную из вкладки Actions
+  workflow_dispatch:
+
+# Права доступа
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+# Разрешить только один деплой за раз
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
-    concurrency: ci-${{ github.ref }}
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-
-      - name: Install and Build 🔧
-        run: |
-          npm ci
-          npm run build
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: dist 
+          # Загружаем весь репозиторий '.'
+          path: '.'
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
