@@ -1,7 +1,7 @@
 # Домашнее задание к занятию "5. Работа с HTML-формами"
 
 Ссылка на проект: https://ben4-front.github.io/Working-with-HTML-forms2/
-![Build Status](https://ci.appveyor.com/project/Ben4-front/Working-with-HTML-forms2)
+[![Build and Deploy](https://github.com/Ben4-front/Working-with-HTML-forms2/actions/workflows/web.yml/badge.svg)](https://github.com/Ben4-front/Working-with-HTML-forms2/actions/workflows/web.yml)
 
 Правила сдачи задания:
 
